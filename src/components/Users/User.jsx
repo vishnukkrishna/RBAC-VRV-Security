@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import Navbar from "../Common/Navbar";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FaTrash, FaSearch, FaEdit, FaUsers } from "react-icons/fa";
+import { FaTrash, FaSearch, FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
+import AddUserModal from "../Modal/AddUserModal";
 
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -76,6 +77,7 @@ const User = () => {
     },
   ];
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [users, setUsers] = useState(initialUsers);
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -265,13 +267,10 @@ const User = () => {
               </select>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <button className="flex items-center gap-2 bg-blue-600 text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition-colors duration-300 w-full sm:w-auto">
-                <FaUsers className="w-5 h-5" />
-                Add User
-              </button>
+            <div className="flex justify-center items-center gap-3">
+              <AddUserModal />
               <button
-                className="flex items-center gap-2 bg-red-600 text-white px-3 py-1 rounded-lg hover:bg-red-700 transition-colors duration-300 w-full sm:w-auto"
+                className="flex items-center gap-2 bg-red-600 text-white px-2 py-1 rounded-lg hover:bg-red-700 transition-colors duration-300"
                 onClick={handleBulkDelete}
               >
                 <FaTrash className="w-5 h-5" />
