@@ -1,0 +1,84 @@
+import React, { useState } from "react";
+import { FaUsers, FaKey } from "react-icons/fa";
+import { MdSecurity, MdDashboard } from "react-icons/md";
+import { CgMenuGridO } from "react-icons/cg";
+import { AiOutlineCloseCircle } from "react-icons/ai";
+import { Link } from "react-router-dom";
+
+const menuItems = [
+  { label: "Dashboard", icon: <MdDashboard />, path: "/dashboard" },
+  { label: "Users", icon: <FaUsers />, path: "/users" },
+  { label: "Roles", icon: <MdSecurity />, path: "/roles" },
+  { label: "Permissions", icon: <FaKey />, path: "/permissions" },
+];
+
+const Sidebar = () => {
+  const [activeButton, setActiveButton] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const handleClick = (index, path) => {
+    setActiveButton(index);
+  };
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
+  return (
+    <div className="relative">
+      <aside
+        className={`fixed top-0 left-0 h-screen pt-5 bg-gray-900 text-white z-40 sm:w-64 w-60 shadow-lg transition-all duration-75 ease-linear ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+        } sm:translate-x-0`}
+      >
+        <div className="w-full flex justify-center py-4 mb-8 border-b border-gray-700">
+          <h1 className="text-2xl font-bold text-white tracking-wide cursor-pointer">
+            RBAC
+          </h1>
+        </div>
+        <ul className="flex flex-col gap-4 w-full px-4">
+          {menuItems.map((menu, index) => (
+            <li key={index} className="w-full">
+              <Link
+                to={menu.path}
+                className={`flex items-center gap-4 w-full h-12 px-4 rounded-md text-left text-white/90 hover:bg-gray-800 transition-all ${
+                  activeButton === index ? "bg-gray-700" : ""
+                }`}
+                onClick={() => handleClick(index, menu.path)}
+              >
+                <span className="text-2xl">{menu.icon}</span>
+                <span className="flex-1 text-lg">{menu.label}</span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </aside>
+
+      <button
+        onClick={toggleSidebar}
+        className="absolute top-7 left-4 sm:hidden z-50 p-2 rounded-full text-white"
+      >
+        {isSidebarOpen ? (
+          <AiOutlineCloseCircle
+            size={24}
+            className="p-1 bg-white text-gray-900 rounded-full"
+          />
+        ) : (
+          <CgMenuGridO
+            size={24}
+            className="bg-white text-gray-900 rounded-full"
+          />
+        )}
+      </button>
+
+      {isSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-30 sm:hidden"
+          onClick={toggleSidebar}
+        ></div>
+      )}
+    </div>
+  );
+};
+
+export default Sidebar;
