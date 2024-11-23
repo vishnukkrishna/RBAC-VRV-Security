@@ -3,7 +3,7 @@ import { FaUsers, FaKey } from "react-icons/fa";
 import { MdSecurity, MdDashboard } from "react-icons/md";
 import { CgMenuGridO } from "react-icons/cg";
 import { AiOutlineCloseCircle } from "react-icons/ai";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const menuItems = [
   { label: "Dashboard", icon: <MdDashboard />, path: "/dashboard" },
@@ -13,12 +13,8 @@ const menuItems = [
 ];
 
 const Sidebar = () => {
-  const [activeButton, setActiveButton] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-  const handleClick = (index, path) => {
-    setActiveButton(index);
-  };
+  const location = useLocation();
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -42,9 +38,8 @@ const Sidebar = () => {
               <Link
                 to={menu.path}
                 className={`flex items-center gap-4 w-full h-12 px-4 rounded-md text-left text-white/90 hover:bg-gray-800 transition-all ${
-                  activeButton === index ? "bg-gray-700" : ""
+                  location.pathname === menu.path ? "bg-gray-700" : ""
                 }`}
-                onClick={() => handleClick(index, menu.path)}
               >
                 <span className="text-2xl">{menu.icon}</span>
                 <span className="flex-1 text-lg">{menu.label}</span>
