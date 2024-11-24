@@ -11,7 +11,7 @@ const EditRoleModal = ({ roleData, isOpen, onClose, onSave }) => {
 
   useEffect(() => {
     if (roleData) {
-      setRole(roleData); // Update role state with the provided role data
+      setRole(roleData);
     }
   }, [roleData]);
 
@@ -35,9 +35,9 @@ const EditRoleModal = ({ roleData, isOpen, onClose, onSave }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting role:", role); // Add a console log to check the role
+    console.log("Submitting role:", role);
     if (typeof onSave === "function") {
-      onSave(role); // Call the onSave function passed from the parent component
+      onSave(role);
     } else {
       console.error("onSave is not a function!", onSave);
     }

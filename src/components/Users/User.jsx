@@ -6,6 +6,7 @@ import { FaTrash, FaSearch, FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 import AddUserModal from "../Modal/AddModal/AddUserModal";
 import EditUserModal from "../Modal/EditModal/EditUserModal";
+import { users as importedUsers } from "../Api/MockDatas";
 
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -33,52 +34,7 @@ const User = () => {
     { key: "action", value: "Actions" },
   ];
 
-  const initialUsers = [
-    {
-      userId: 1,
-      username: "vishnu",
-      role: "Admin",
-      status: "Active",
-      created: "2023-05-12",
-    },
-    {
-      userId: 2,
-      username: "jishnu",
-      role: "User",
-      status: "Inactive",
-      created: "2022-11-20",
-    },
-    {
-      userId: 3,
-      username: "priya",
-      role: "Moderator",
-      status: "Active",
-      created: "2021-08-30",
-    },
-    {
-      userId: 4,
-      username: "akhil",
-      role: "User",
-      status: "Active",
-      created: "2020-03-17",
-    },
-    {
-      userId: 5,
-      username: "arun",
-      role: "Admin",
-      status: "Inactive",
-      created: "2019-10-04",
-    },
-    {
-      userId: 6,
-      username: "arju",
-      role: "Admin",
-      status: "Inactive",
-      created: "2019-10-04",
-    },
-  ];
-
-  const [users, setUsers] = useState(initialUsers);
+  const [users, setUsers] = useState(importedUsers);
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCategory, setSearchCategory] = useState("user");
