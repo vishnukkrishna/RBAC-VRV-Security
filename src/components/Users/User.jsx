@@ -4,7 +4,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaTrash, FaSearch, FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
-import AddUserModal from "../Modal/AddUserModal";
+import AddUserModal from "../Modal/AddModal/AddUserModal";
+import EditUserModal from "../Modal/EditModal/EditUserModal";
 
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -77,12 +78,13 @@ const User = () => {
     },
   ];
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [users, setUsers] = useState(initialUsers);
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCategory, setSearchCategory] = useState("user");
   const [filter, setFilter] = useState({ role: "", status: "" });
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedUser, setSelectedUser] = useState(null);
   const [sortConfig, setSortConfig] = useState({
     key: "userId",
     direction: "asc",
@@ -162,9 +164,10 @@ const User = () => {
   };
 
   const handleEdit = (userId) => {
-    toast.info(`Edit user with ID: ${userId}`, { position: "top-right" });
+    const user = users.find((user) => user.userId === userId);
+    setSelectedUser(user);
+    setIsModalOpen(true);
   };
-
   const handleDelete = (userId) => {
     Swal.fire({
       title: "Are you sure?",
@@ -215,7 +218,7 @@ const User = () => {
       <ToastContainer />
       <div className="bg-white rounded-lg shadow-md mt-6 p-6 sm:p-8">
         <div className="container mx-auto">
-          <h1 className="text-3xl py-4 border-b mb-10">Users Table</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-4">User Table</h1>
           <div className="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
             <div className="flex flex-col sm:flex-row sm:space-x-4 w-full sm:w-auto items-start sm:items-center">
               <div className="relative w-full sm:w-56">
@@ -319,18 +322,18 @@ const User = () => {
                     <td className="px-6 py-4">{user.role}</td>
                     <td className="px-6 py-4">{user.status}</td>
                     <td className="px-6 py-4">{user.created}</td>
-                    <td className="px-6 py-4 flex space-x-2">
+                    <td className="px-6 py-4 flex items-center gap-5">
                       <button
-                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                        className="text-blue-600 hover:text-blue-800 transition-colors duration-300"
                         onClick={() => handleEdit(user.userId)}
                       >
-                        <FaEdit className="w-5 h-5" />
+                        <FaEdit size={23} />
                       </button>
                       <button
-                        className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300"
+                        className="text-red-600 hover:text-red-800 transition-colors duration-300"
                         onClick={() => handleDelete(user.userId)}
                       >
-                        <FaTrash className="w-5 h-5" />
+                        <FaTrash size={23} />
                       </button>
                     </td>
                   </tr>
@@ -338,26 +341,39 @@ const User = () => {
               </tbody>
             </table>
           </div>
-
+          {isModalOpen && (
+            <EditUserModal
+              userData={selectedUser}
+              isOpen={isModalOpen}
+              onClose={() => setIsModalOpen(false)}
+              onSave={(updatedUser) => {
+                setUsers(
+                  users.map((user) =>
+                    user.userId === updatedUser.userId ? updatedUser : user
+                  )
+                );
+                setIsModalOpen(false);
+              }}
+            />
+          )}
           <div className="mt-4 flex justify-between items-center">
             <div className="text-sm">
-              Showing page {currentPage} of {totalPages}
+              Page {currentPage} of {totalPages}
             </div>
             <div className="flex space-x-2">
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors duration-300"
-              >
-                Previous
-              </button>
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors duration-300"
-              >
-                Next
-              </button>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  className={`px-3 py-1 rounded-lg ${
+                    i + 1 === currentPage
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 text-gray-700"
+                  } hover:bg-blue-700 hover:text-white transition-colors duration-300`}
+                  onClick={() => handlePageChange(i + 1)}
+                >
+                  {i + 1}
+                </button>
+              ))}
             </div>
           </div>
         </div>

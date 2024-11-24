@@ -28,9 +28,9 @@ const Sidebar = () => {
         } sm:translate-x-0`}
       >
         <div className="w-full flex justify-center py-4 mb-8 border-b border-gray-700">
-          <h1 className="text-2xl font-bold text-white tracking-wide cursor-pointer">
+          <Link to={'/dashboard'} className="text-2xl font-bold text-white tracking-wide cursor-pointer">
             RBAC
-          </h1>
+          </Link>
         </div>
         <ul className="flex flex-col gap-4 w-full px-4">
           {menuItems.map((menu, index) => (

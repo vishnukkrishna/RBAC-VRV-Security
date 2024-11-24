@@ -4,8 +4,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaTrash, FaSearch, FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
-import AddUserModal from "../Modal/AddUserModal";
-import AddRole from "../Modal/AddRole";
+import EditRoleModal from "../Modal/EditModal/EditRoleModal";
+import AddRole from "../Modal/AddModal/AddRoleModal";
 
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -26,7 +26,7 @@ const useDebounce = (value, delay) => {
 const Role = () => {
   const headings = [
     { key: "Id", value: "ID" },
-    { key: "rolename", value: "Role Name" },
+    { key: "rolename", value: "Role" },
     { key: "description", value: "Description" },
     { key: "permission", value: "Permission" },
     { key: "action", value: "Actions" },
@@ -107,12 +107,14 @@ const Role = () => {
     },
   ];
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [roles, setRoles] = useState(initialRoles);
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchCategory, setSearchCategory] = useState("rolename");
   const [filter, setFilter] = useState({ role: "" });
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(null);
+
   const [sortConfig, setSortConfig] = useState({
     key: "roleId",
     direction: "asc",
@@ -188,7 +190,9 @@ const Role = () => {
   };
 
   const handleEdit = (roleId) => {
-    toast.info(`Edit role with ID: ${roleId}`, { position: "top-right" });
+    const roleToEdit = roles.find((role) => role.roleId === roleId);
+    setSelectedRole(roleToEdit);
+    setIsEditModalOpen(true);
   };
 
   const handleDelete = (roleId) => {
@@ -240,7 +244,7 @@ const Role = () => {
       <Navbar />
       <div className="bg-white rounded-lg shadow-md mt-6 p-6 sm:p-8">
         <div className="container mx-auto">
-          <h1 className="text-3xl py-4 border-b mb-10">Roles Table</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold mb-4">Role Table</h1>
           <div className="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
             <div className="relative flex gap-5">
               <input
@@ -324,13 +328,13 @@ const Role = () => {
                     <td className="px-6 py-4">{role.rolename}</td>
                     <td className="px-6 py-4">{role.description}</td>
                     <td className="px-6 py-4">
-                      <div className="flex flex-wrap gap-5">
+                      <div className="flex flex-wrap gap-5 border rounded">
                         {Object.entries(role.permissions)
                           .filter(([permission, isActive]) => isActive)
                           .map(([permission, isActive]) => (
                             <div
                               key={permission}
-                              className="flex items-center space-x-2"
+                              className="flex items-center space-x-2 pl-3"
                             >
                               <input
                                 type="checkbox"
@@ -348,18 +352,18 @@ const Role = () => {
                       </div>
                     </td>
 
-                    <td className="px-6 py-4 flex space-x-2">
+                    <td className="px-6 py-4 flex items-center gap-5">
                       <button
-                        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-300"
+                        className="text-blue-600 hover:text-blue-800 transition-colors duration-300"
                         onClick={() => handleEdit(role.roleId)}
                       >
-                        <FaEdit className="w-5 h-5" />
+                        <FaEdit size={23} />
                       </button>
                       <button
-                        className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-300"
+                        className="text-red-600 hover:text-red-800 transition-colors duration-300"
                         onClick={() => handleDelete(role.roleId)}
                       >
-                        <FaTrash className="w-5 h-5" />
+                        <FaTrash size={23} />
                       </button>
                     </td>
                   </tr>
@@ -368,25 +372,39 @@ const Role = () => {
             </table>
           </div>
 
+          {isEditModalOpen && (
+            <EditRoleModal
+              isOpen={isEditModalOpen}
+              onClose={() => setIsEditModalOpen(false)}
+              roleData={selectedRole}
+              updateRole={(updatedRole) => {
+                setRoles(
+                  roles.map((role) =>
+                    role.roleId === updatedRole.roleId ? updatedRole : role
+                  )
+                );
+              }}
+            />
+          )}
+
           <div className="mt-4 flex justify-between items-center">
             <div className="text-sm">
-              Showing page {currentPage} of {totalPages}
+              Page {currentPage} of {totalPages}
             </div>
             <div className="flex space-x-2">
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors duration-300"
-              >
-                Previous
-              </button>
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 transition-colors duration-300"
-              >
-                Next
-              </button>
+              {Array.from({ length: totalPages }, (_, i) => (
+                <button
+                  key={i}
+                  className={`px-3 py-1 rounded-lg ${
+                    i + 1 === currentPage
+                      ? "bg-blue-600 text-white"
+                      : "bg-gray-200 text-gray-700"
+                  } hover:bg-blue-700 hover:text-white transition-colors duration-300`}
+                  onClick={() => handlePageChange(i + 1)}
+                >
+                  {i + 1}
+                </button>
+              ))}
             </div>
           </div>
         </div>
