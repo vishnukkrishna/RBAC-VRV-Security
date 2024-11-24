@@ -10,6 +10,7 @@ import PermissionPage from "./pages/PermissionPage";
 import DashboardPage from "./pages/DashboardPage";
 import RolePage from "./pages/RolePage";
 import UserPage from "./pages/UserPage";
+import NotFoundPage from "./components/NotFoundPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/users" element={<UserPage />} />
         <Route path="/roles" element={<RolePage />} />
         <Route path="/permissions" element={<PermissionPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );
