@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
 
 const EditPermissionModal = ({ permissionData, isOpen, onClose, onSave }) => {
   const [permission, setPermission] = useState({
@@ -27,6 +28,7 @@ const EditPermissionModal = ({ permissionData, isOpen, onClose, onSave }) => {
     console.log("Edited Permission details submitted:", permission);
     onSave(permission);
     onClose();
+    toast("Sucessfully edited");
   };
 
   return (

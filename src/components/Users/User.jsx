@@ -53,7 +53,6 @@ const User = () => {
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const filteredUsers = users.filter((user) => {
-    // Ensure that each property exists and is a string before calling toLowerCase
     const name = user.name ? user.name.toLowerCase() : "";
     const role = user.role ? user.role.toLowerCase() : "";
     const status = user.status ? user.status.toLowerCase() : "";
@@ -263,7 +262,7 @@ const User = () => {
                   </th>
                   {headings.map((heading) => (
                     <th
-                      key={heading.key} // Make sure 'heading.key' is unique for each header
+                      key={heading.key}
                       className="px-6 py-3 font-semibold text-gray-700 cursor-pointer"
                       onClick={() => handleSort(heading.key)}
                     >

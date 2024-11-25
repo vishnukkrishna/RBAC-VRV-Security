@@ -46,22 +46,29 @@ const Role = () => {
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
+  const [permissions, setPermissions] = useState({
+    read: false,
+    write: false,
+    delete: false,
+    manageRoles: false,
+    viewAnalytics: false,
+  });
+
   const getFilteredRoles = () => {
     return roles
       .filter((role) => {
         if (searchCategory === "rolename") {
+          const roleName = role.rolename?.toLowerCase() || "";
+          const description = role.description?.toLowerCase() || "";
+
           return (
-            role.rolename
-              .toLowerCase()
-              .includes(debouncedSearchTerm.toLowerCase()) ||
-            role.description
-              .toLowerCase()
-              .includes(debouncedSearchTerm.toLowerCase())
+            roleName.includes(debouncedSearchTerm.toLowerCase()) ||
+            description.includes(debouncedSearchTerm.toLowerCase())
           );
         }
-        return role[searchCategory]
-          .toLowerCase()
-          .includes(debouncedSearchTerm.toLowerCase());
+
+        const searchField = role[searchCategory]?.toLowerCase() || "";
+        return searchField.includes(debouncedSearchTerm.toLowerCase());
       })
       .filter((role) => {
         return filter.role ? role.rolename === filter.role : true;
@@ -158,6 +165,16 @@ const Role = () => {
     });
   };
 
+  const handleAddRole = (newRoleData) => {
+    const newRole = {
+      ...newRoleData,
+      permissions,
+    };
+
+    setRoles((prevRoles) => [...prevRoles, newRole]);
+    console.log("New Role Added:", newRole);
+  };
+
   return (
     <div className="p-4 sm:p-6 md:p-8">
       <Navbar />
@@ -165,7 +182,6 @@ const Role = () => {
         <div className="container mx-auto">
           <h1 className="text-2xl sm:text-3xl font-bold mb-4">Role Table</h1>
 
-          {/* Filters & Actions */}
           <div className="mb-4 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
             <div className="relative flex gap-5">
               <input
@@ -190,7 +206,7 @@ const Role = () => {
               </select>
             </div>
             <div className="flex gap-3">
-              <AddRole />
+              <AddRole onAddRole={handleAddRole} />
               <button
                 className="flex items-center gap-2 bg-red-600 text-white px-2 py-1 rounded-lg hover:bg-red-700 transition-colors duration-300"
                 onClick={handleBulkDelete}
@@ -298,19 +314,18 @@ const Role = () => {
             </div>
           </div>
 
-          {/* Edit Modal */}
           {isEditModalOpen && (
             <EditRoleModal
               isOpen={isEditModalOpen}
               onClose={() => setIsEditModalOpen(false)}
               roleData={selectedRole}
-              updateRole={(updatedRole) => {
-                setRoles(
-                  roles.map((role) =>
+              onSave={(updatedRole) =>
+                setRoles((prev) =>
+                  prev.map((role) =>
                     role.Id === updatedRole.Id ? updatedRole : role
                   )
-                );
-              }}
+                )
+              }
             />
           )}
         </div>

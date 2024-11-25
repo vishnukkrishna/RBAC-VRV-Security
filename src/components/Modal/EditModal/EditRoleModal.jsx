@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
 
 const EditRoleModal = ({ roleData, isOpen, onClose, onSave }) => {
   const [role, setRole] = useState({
@@ -41,6 +42,8 @@ const EditRoleModal = ({ roleData, isOpen, onClose, onSave }) => {
     } else {
       console.error("onSave is not a function!", onSave);
     }
+    onClose();
+    toast("Role successfully edited!");
   };
 
   return (

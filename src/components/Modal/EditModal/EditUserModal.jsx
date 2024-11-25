@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
 
 const EditUserModal = ({ userData, isOpen, onClose, onSave }) => {
   const [user, setUser] = useState({
@@ -31,6 +32,7 @@ const EditUserModal = ({ userData, isOpen, onClose, onSave }) => {
     } else {
       console.error("onSave is not a function!", onSave);
     }
+    toast("Successfully edited");
   };
 
   return (

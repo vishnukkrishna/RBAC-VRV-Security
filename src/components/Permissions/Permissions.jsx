@@ -188,9 +188,6 @@ const Permissions = () => {
         permission.id === updatedPermission.id ? updatedPermission : permission
       )
     );
-    toast.success("Permission updated successfully!", {
-      position: "top-right",
-    });
   };
 
   const uniquePermissions = Array.from(
@@ -235,7 +232,7 @@ const Permissions = () => {
             </div>
 
             <div className="flex justify-center items-center gap-3">
-              <AddPermissionModal  onAddPermission={handleAddPermission}/>
+              <AddPermissionModal onAddPermission={handleAddPermission} />
               <button
                 className="flex items-center gap-2 bg-red-600 text-white px-2 py-1 rounded-lg hover:bg-red-700 transition-colors duration-300"
                 onClick={handleBulkDelete}

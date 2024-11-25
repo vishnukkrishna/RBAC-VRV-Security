@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { toast } from "react-toastify";
 
-const AddRoleModal = () => {
+const AddRoleModal = ({ onAddRole }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const [roleData, setRoleData] = useState({
-    role: "",
+    rolename: "",
     description: "",
     permissions: {
-      readUsers: false,
-      writeUsers: false,
-      deleteUsers: false,
+      read: false,
+      write: false,
+      delete: false,
       manageRoles: false,
       viewAnalytics: false,
     },
@@ -26,26 +27,49 @@ const AddRoleModal = () => {
 
   const handlePermissionChange = (e) => {
     const { name, checked } = e.target;
-    setRoleData((prevState) => ({
-      ...prevState,
-      permissions: {
-        ...prevState.permissions,
-        [name]: checked,
-      },
-    }));
+
+    setRoleData((prevState) => {
+      const updatedState = {
+        ...prevState,
+        permissions: {
+          ...prevState.permissions,
+          [name]: checked,
+        },
+      };
+      console.log("Updated Permissions State:", updatedState.permissions); // Debugging
+      return updatedState;
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Role details submitted:", roleData);
+    if (!roleData.rolename || !roleData.description) {
+      alert("Please fill in both the role name and description.");
+      return;
+    }
+
+    // Call parent handler
+    onAddRole(roleData);
+
+    const resetPermissions = () => {
+      setRoleData((prevState) => ({
+        ...prevState,
+        permissions: {},
+      }));
+    };
+
+    // Example usage:
+    resetPermissions();
+
     setModalOpen(false);
+    toast("Role successfully added!");
   };
 
   return (
     <div>
       <button
         onClick={() => setModalOpen(true)}
-        className="flex items-center justify-center px-2 py-1 text-base pl-1 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-lg dark:bg-blue-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50"
+        className="flex items-center justify-center px-2 py-1 text-base pl-1 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-lg hover:bg-indigo-600"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +100,7 @@ const AddRoleModal = () => {
           >
             <div className="flex items-end justify-center min-h-screen px-4 text-center md:items-center sm:block sm:p-0">
               <motion.div
-                className="inline-block w-full border-2 border-gray-200 max-w-xl p-8 my-20 overflow-hidden text-left transform bg-white rounded-lg shadow-xl 2xl:max-w-2xl"
+                className="inline-block w-full max-w-xl p-8 my-20 overflow-hidden text-left transform bg-white rounded-lg shadow-xl"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
@@ -109,15 +133,15 @@ const AddRoleModal = () => {
                 <form onSubmit={handleSubmit} className="mt-5">
                   <div>
                     <label
-                      htmlFor="role"
-                      className="block text-sm text-gray-700 capitalize dark:text-gray-500"
+                      htmlFor="rolename"
+                      className="block text-sm text-gray-700 capitalize"
                     >
                       Role
                     </label>
                     <input
-                      id="role"
-                      name="role"
-                      value={roleData.role}
+                      id="rolename"
+                      name="rolename"
+                      value={roleData.rolename}
                       onChange={handleInputChange}
                       placeholder="Enter role..."
                       type="text"
@@ -128,7 +152,7 @@ const AddRoleModal = () => {
                   <div className="mt-4">
                     <label
                       htmlFor="description"
-                      className="block text-sm text-gray-700 capitalize dark:text-gray-500"
+                      className="block text-sm text-gray-700 capitalize"
                     >
                       Role Description
                     </label>
@@ -144,69 +168,37 @@ const AddRoleModal = () => {
                   </div>
 
                   <div className="mt-4">
-                    <label className="block text-sm text-gray-700 capitalize dark:text-gray-500">
+                    <label className="block text-sm text-gray-700 capitalize">
                       Permissions
                     </label>
                     <div className="grid grid-cols-2 gap-4 mt-2">
-                      <label className="inline-flex items-center">
-                        <input
-                          type="checkbox"
-                          name="readUsers"
-                          checked={roleData.permissions.readUsers}
-                          onChange={handlePermissionChange}
-                          className="form-checkbox text-indigo-600 transition duration-300"
-                        />
-                        <span className="ml-2 text-gray-700">Read Users</span>
-                      </label>
-                      <label className="inline-flex items-center">
-                        <input
-                          type="checkbox"
-                          name="writeUsers"
-                          checked={roleData.permissions.writeUsers}
-                          onChange={handlePermissionChange}
-                          className="form-checkbox text-indigo-600 transition duration-300"
-                        />
-                        <span className="ml-2 text-gray-700">Write Users</span>
-                      </label>
-                      <label className="inline-flex items-center">
-                        <input
-                          type="checkbox"
-                          name="deleteUsers"
-                          checked={roleData.permissions.deleteUsers}
-                          onChange={handlePermissionChange}
-                          className="form-checkbox text-indigo-600 transition duration-300"
-                        />
-                        <span className="ml-2 text-gray-700">Delete Users</span>
-                      </label>
-                      <label className="inline-flex items-center">
-                        <input
-                          type="checkbox"
-                          name="manageRoles"
-                          checked={roleData.permissions.manageRoles}
-                          onChange={handlePermissionChange}
-                          className="form-checkbox text-indigo-600 transition duration-300"
-                        />
-                        <span className="ml-2 text-gray-700">Manage Roles</span>
-                      </label>
-                      <label className="inline-flex items-center">
-                        <input
-                          type="checkbox"
-                          name="viewAnalytics"
-                          checked={roleData.permissions.viewAnalytics}
-                          onChange={handlePermissionChange}
-                          className="form-checkbox text-indigo-600 transition duration-300"
-                        />
-                        <span className="ml-2 text-gray-700">
-                          View Analytics
-                        </span>
-                      </label>
+                      {Object.keys(roleData.permissions).map(
+                        (permissionKey) => (
+                          <label
+                            key={permissionKey}
+                            className="inline-flex items-center"
+                          >
+                            <input
+                              type="checkbox"
+                              name={permissionKey} // Matches key in roleData.permissions
+                              checked={roleData.permissions[permissionKey]} // Checked state
+                              onChange={handlePermissionChange} // Update handler
+                              className="form-checkbox text-indigo-600 transition duration-300"
+                            />
+                            <span className="ml-2 text-gray-700">
+                              {permissionKey.replace(/([A-Z])/g, " $1").trim()}{" "}
+                              {/* Formatting */}
+                            </span>
+                          </label>
+                        )
+                      )}
                     </div>
                   </div>
 
                   <div className="flex justify-end mt-6">
                     <button
                       type="submit"
-                      className="px-3 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-500 rounded-md dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50"
+                      className="px-3 py-2 text-sm tracking-wide text-white capitalize bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-50"
                     >
                       Add Role
                     </button>
