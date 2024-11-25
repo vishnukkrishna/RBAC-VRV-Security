@@ -27,6 +27,7 @@ const useDebounce = (value, delay) => {
 const User = () => {
   const headings = [
     { key: "userId", value: "User ID" },
+    { key: "image", value: "Image" },
     { key: "username", value: "Username" },
     { key: "role", value: "Role" },
     { key: "status", value: "Status" },
@@ -274,6 +275,15 @@ const User = () => {
                       />
                     </td>
                     <td className="px-6 py-4">{user.userId}</td>
+                    <td className="px-6 py-4">
+                      <img
+                        src={
+                          user.image || "https://example.com/default-avatar.jpg"
+                        } // Placeholder for no image
+                        alt={`${user.username}'s avatar`}
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                    </td>
                     <td className="px-6 py-4">{user.username}</td>
                     <td className="px-6 py-4">{user.role}</td>
                     <td className="px-6 py-4">{user.status}</td>
