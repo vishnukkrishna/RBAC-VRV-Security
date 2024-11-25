@@ -24,11 +24,9 @@ const AddPermissionModal = ({ onAddPermission }) => {
       return;
     }
 
-    // Retrieve existing permissions from sessionStorage or initialize an empty array
     const existingPermissions =
       JSON.parse(sessionStorage.getItem("permissions")) || [];
 
-    // Add the new permission
     const updatedPermissions = [
       ...existingPermissions,
       {
@@ -37,16 +35,13 @@ const AddPermissionModal = ({ onAddPermission }) => {
       },
     ];
 
-    // Save the updated permissions back to sessionStorage
     sessionStorage.setItem("permissions", JSON.stringify(updatedPermissions));
 
-    // Pass new permission data back to the parent component
     onAddPermission({
       permission: permission.permissionName,
       description: permission.description,
     });
 
-    // Clear the form and close the modal
     setPermission({ permissionName: "", description: "" });
     setModalOpen(false);
   };
