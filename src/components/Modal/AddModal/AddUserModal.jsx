@@ -11,6 +11,7 @@ const AddUserModal = () => {
     status: "Active",
   });
 
+  // Handle changes in input fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUser({
@@ -19,14 +20,19 @@ const AddUserModal = () => {
     });
   };
 
+  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Normally, here you'd send the user data to the backend API
     console.log("User details submitted:", user);
+
+    // Assuming the user was successfully added to the backend, close the modal
     setModelOpen(false);
   };
 
   return (
     <div>
+      {/* Button to open modal */}
       <button
         onClick={() => setModelOpen(true)}
         className="flex items-center justify-center px-2 py-1 text-base pl-1 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-lg dark:bg-blue-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50"
@@ -46,6 +52,7 @@ const AddUserModal = () => {
         <span>Invite Member</span>
       </button>
 
+      {/* Modal */}
       <AnimatePresence>
         {modelOpen && (
           <motion.div
@@ -90,6 +97,8 @@ const AddUserModal = () => {
                     </svg>
                   </button>
                 </div>
+
+                {/* User Creation Form */}
                 <form onSubmit={handleSubmit} className="mt-5">
                   <div>
                     <label
@@ -166,6 +175,7 @@ const AddUserModal = () => {
                     </select>
                   </div>
 
+                  {/* Submit Button */}
                   <div className="flex justify-end mt-6">
                     <button
                       type="submit"

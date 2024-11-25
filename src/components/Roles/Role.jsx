@@ -182,9 +182,11 @@ const Role = () => {
                 onChange={(e) => setFilter({ ...filter, role: e.target.value })}
               >
                 <option value="">Filter by Role</option>
-                <option value="Admin">Admin</option>
-                <option value="User">User</option>
-                <option value="Moderator">Moderator</option>
+                {roles.map((role) => (
+                  <option key={role.Id} value={role.rolename}>
+                    {role.rolename}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="flex gap-3">
