@@ -183,7 +183,6 @@ const Permissions = () => {
     });
   };
 
-  // Get unique permissions for the filter dropdown
   const uniquePermissions = Array.from(
     new Set(permissions.map((permission) => permission.permission))
   );

@@ -8,7 +8,6 @@ import EditRoleModal from "../Modal/EditModal/EditRoleModal";
 import AddRole from "../Modal/AddModal/AddRoleModal";
 import { roles as importedRoles } from "../Api/MockDatas";
 
-// Custom hook for debouncing
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -26,7 +25,6 @@ const useDebounce = (value, delay) => {
 };
 
 const Role = () => {
-  // Constants
   const rowsPerPage = 5;
   const headings = [
     { key: "Id", value: "ID" },
@@ -36,7 +34,6 @@ const Role = () => {
     { key: "action", value: "Actions" },
   ];
 
-  // States
   const [roles, setRoles] = useState(importedRoles);
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -49,11 +46,9 @@ const Role = () => {
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  // Functions: Filter, Sort, and Pagination
   const getFilteredRoles = () => {
     return roles
       .filter((role) => {
-        // Search filtering
         if (searchCategory === "rolename") {
           return (
             role.rolename
@@ -69,11 +64,9 @@ const Role = () => {
           .includes(debouncedSearchTerm.toLowerCase());
       })
       .filter((role) => {
-        // Role-based filtering
         return filter.role ? role.rolename === filter.role : true;
       })
       .sort((a, b) => {
-        // Sorting
         if (a[sortConfig.key] < b[sortConfig.key])
           return sortConfig.direction === "asc" ? -1 : 1;
         if (a[sortConfig.key] > b[sortConfig.key])
@@ -89,7 +82,6 @@ const Role = () => {
   );
   const totalPages = Math.ceil(filteredRoles.length / rowsPerPage);
 
-  // Event Handlers
   const handleSort = (key) => {
     setSortConfig({
       key,
@@ -166,7 +158,6 @@ const Role = () => {
     });
   };
 
-  // Component Rendering
   return (
     <div className="p-4 sm:p-6 md:p-8">
       <Navbar />
