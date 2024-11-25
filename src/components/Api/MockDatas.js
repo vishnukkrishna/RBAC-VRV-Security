@@ -6,7 +6,7 @@ export const users = [
     status: "Active",
     created: "2024-01-01",
     image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=faces", // Image URL for Vishnu
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=faces",
   },
   {
     userId: 2,
@@ -14,7 +14,7 @@ export const users = [
     role: "User",
     status: "Inactive",
     created: "2024-02-15",
-    image: "https://example.com/images/jishnu.jpg", // Image URL for Jishnu
+    image: "https://example.com/images/jishnu.jpg",
   },
   {
     userId: 3,
@@ -23,7 +23,7 @@ export const users = [
     status: "Active",
     created: "2024-03-12",
     image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces", // Image URL for Akhil
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces",
   },
   {
     userId: 4,
@@ -31,7 +31,7 @@ export const users = [
     role: "Manager",
     status: "Inactive",
     created: "2024-04-05",
-    image: "https://example.com/images/arun.jpg", // Image URL for Arun
+    image: "https://example.com/images/arun.jpg",
   },
   {
     userId: 5,
@@ -40,7 +40,7 @@ export const users = [
     status: "Inactive",
     created: "2024-05-20",
     image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=faces", // Image URL for Arjun
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=faces",
   },
   {
     userId: 6,
@@ -49,7 +49,7 @@ export const users = [
     status: "Active",
     created: "2024-06-10",
     image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces", // Image URL for Priya
+      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces",
   },
 ];
 
