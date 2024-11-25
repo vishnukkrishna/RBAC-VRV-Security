@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const EditUserModal = ({ userData, isOpen, onClose, onSave }) => {
   const [user, setUser] = useState({
     userId: "",
-    username: "",
+    name: "",
     role: "",
     status: "",
   });
@@ -79,15 +79,15 @@ const EditUserModal = ({ userData, isOpen, onClose, onSave }) => {
               <form onSubmit={handleSubmit} className="mt-5">
                 <div>
                   <label
-                    htmlFor="username"
+                    htmlFor="name"
                     className="block text-sm text-gray-700 capitalize"
                   >
                     Username
                   </label>
                   <input
-                    id="username"
-                    name="username"
-                    value={user.username || ""}
+                    id="name"
+                    name="name"
+                    value={user.name || ""}
                     onChange={handleInputChange}
                     placeholder="Edit username..."
                     type="text"

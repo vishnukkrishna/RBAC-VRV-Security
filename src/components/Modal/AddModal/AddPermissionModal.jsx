@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const AddPermissionModal = () => {
+const AddPermissionModal = ({ onAddPermission }) => {
   const [modalOpen, setModalOpen] = useState(false);
-
   const [permission, setPermission] = useState({
     permissionName: "",
     description: "",
@@ -19,7 +18,36 @@ const AddPermissionModal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Permission details submitted:", permission);
+
+    if (!permission.permissionName || !permission.description) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    // Retrieve existing permissions from sessionStorage or initialize an empty array
+    const existingPermissions =
+      JSON.parse(sessionStorage.getItem("permissions")) || [];
+
+    // Add the new permission
+    const updatedPermissions = [
+      ...existingPermissions,
+      {
+        permission: permission.permissionName,
+        description: permission.description,
+      },
+    ];
+
+    // Save the updated permissions back to sessionStorage
+    sessionStorage.setItem("permissions", JSON.stringify(updatedPermissions));
+
+    // Pass new permission data back to the parent component
+    onAddPermission({
+      permission: permission.permissionName,
+      description: permission.description,
+    });
+
+    // Clear the form and close the modal
+    setPermission({ permissionName: "", description: "" });
     setModalOpen(false);
   };
 

@@ -28,7 +28,8 @@ const User = () => {
   const headings = [
     { key: "userId", value: "User ID" },
     { key: "image", value: "Image" },
-    { key: "username", value: "Username" },
+    { key: "name", value: "Username" },
+    { key: "email", value: "Email" },
     { key: "role", value: "Role" },
     { key: "status", value: "Status" },
     { key: "created", value: "Created" },
@@ -52,19 +53,24 @@ const User = () => {
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const filteredUsers = users.filter((user) => {
+    // Ensure that each property exists and is a string before calling toLowerCase
+    const name = user.name ? user.name.toLowerCase() : "";
+    const role = user.role ? user.role.toLowerCase() : "";
+    const status = user.status ? user.status.toLowerCase() : "";
+    const created = user.created ? user.created.toLowerCase() : "";
+
     if (searchCategory === "user") {
       return (
-        user.username
-          .toLowerCase()
-          .includes(debouncedSearchTerm.toLowerCase()) ||
-        user.role.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-        user.status.toLowerCase().includes(debouncedSearchTerm.toLowerCase()) ||
-        user.created.toLowerCase().includes(debouncedSearchTerm.toLowerCase())
+        name.includes(debouncedSearchTerm.toLowerCase()) ||
+        role.includes(debouncedSearchTerm.toLowerCase()) ||
+        status.includes(debouncedSearchTerm.toLowerCase()) ||
+        created.includes(debouncedSearchTerm.toLowerCase())
       );
     } else {
-      return user[searchCategory]
-        .toLowerCase()
-        .includes(debouncedSearchTerm.toLowerCase());
+      const searchValue = user[searchCategory]
+        ? user[searchCategory].toLowerCase()
+        : "";
+      return searchValue.includes(debouncedSearchTerm.toLowerCase());
     }
   });
 
@@ -169,6 +175,11 @@ const User = () => {
     });
   };
 
+  const handleAddUser = (newUser) => {
+    setUsers((prevUser) => [...prevUser, { id: Date.now(), ...newUser }]);
+    toast.success("User added successfully", { position: "top-right" });
+  };
+
   return (
     <div className="p-4 sm:p-6 md:p-8">
       <Navbar />
@@ -228,7 +239,7 @@ const User = () => {
             </div>
 
             <div className="flex justify-center items-center gap-3">
-              <AddUserModal />
+              <AddUserModal onAddUser={handleAddUser} />
               <button
                 className="flex items-center gap-2 bg-red-600 text-white px-2 py-1 rounded-lg hover:bg-red-700 transition-colors duration-300"
                 onClick={handleBulkDelete}
@@ -252,7 +263,7 @@ const User = () => {
                   </th>
                   {headings.map((heading) => (
                     <th
-                      key={heading.key}
+                      key={heading.key} // Make sure 'heading.key' is unique for each header
                       className="px-6 py-3 font-semibold text-gray-700 cursor-pointer"
                       onClick={() => handleSort(heading.key)}
                     >
@@ -265,7 +276,10 @@ const User = () => {
               </thead>
               <tbody>
                 {paginatedUsers.map((user) => (
-                  <tr key={user.userId} className="hover:bg-gray-50">
+                  <tr
+                    key={`${user.userId}-${user.name}`}
+                    className="hover:bg-gray-50"
+                  >
                     <td className="px-6 py-4">
                       <input
                         type="checkbox"
@@ -279,15 +293,29 @@ const User = () => {
                       <img
                         src={
                           user.image || "https://example.com/default-avatar.jpg"
-                        } // Placeholder for no image
-                        alt={`${user.username}'s avatar`}
+                        }
+                        alt={`${user.name}'s avatar`}
                         className="w-10 h-10 rounded-full object-cover"
                       />
                     </td>
-                    <td className="px-6 py-4">{user.username}</td>
+                    <td className="px-6 py-4">{user.name}</td>
+                    <td className="px-6 py-4">{user.email}</td>
                     <td className="px-6 py-4">{user.role}</td>
-                    <td className="px-6 py-4">{user.status}</td>
-                    <td className="px-6 py-4">{user.created}</td>
+                    <td className="px-6 py-4">
+                      <div
+                        className={`border flex justify-center p-2 rounded-lg ${
+                          user.status === "Active"
+                            ? "bg-green-200 text-green-800"
+                            : "bg-red-200 text-red-800"
+                        }`}
+                      >
+                        {user.status}
+                      </div>
+                    </td>
+
+                    <td className="px-6 py-4">
+                      {new Date(user.created).toLocaleDateString("en-US")}
+                    </td>
                     <td className="px-6 py-4 flex items-center gap-5">
                       <button
                         className="text-blue-600 hover:text-blue-800 transition-colors duration-300"

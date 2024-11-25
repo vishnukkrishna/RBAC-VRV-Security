@@ -1,7 +1,8 @@
 export const users = [
   {
     userId: 1,
-    username: "vishnu",
+    name: "vishnu",
+    email: "vishnu@gmail.com",
     role: "Admin",
     status: "Active",
     created: "2024-01-01",
@@ -10,7 +11,8 @@ export const users = [
   },
   {
     userId: 2,
-    username: "jishnu",
+    name: "jishnu",
+    email: "jishnu@gmail.com",
     role: "User",
     status: "Inactive",
     created: "2024-02-15",
@@ -18,35 +20,39 @@ export const users = [
   },
   {
     userId: 3,
-    username: "akhil",
+    name: "akhil",
+    email: "akhil@gmail.com",
     role: "User",
     status: "Active",
     created: "2024-03-12",
     image:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces",
-  },
-  {
-    userId: 4,
-    username: "arun",
-    role: "Manager",
-    status: "Inactive",
-    created: "2024-04-05",
-    image: "https://example.com/images/arun.jpg",
-  },
-  {
-    userId: 5,
-    username: "arjun",
-    role: "Admin",
-    status: "Inactive",
-    created: "2024-05-20",
-    image:
       "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=faces",
   },
+  // {
+  //   userId: 4,
+  //   name: "arun",
+  //   email: "arun@gmail.com",
+  //   role: "Manager",
+  //   status: "Inactive",
+  //   created: "2024-04-05",
+  //   image: "https://example.com/images/arun.jpg",
+  // },
+  // {
+  //   userId: 5,
+  //   name: "arjun",
+  //   email: "arjun@gmail.com",
+  //   role: "Admin",
+  //   status: "Inactive",
+  //   created: "2024-05-20",
+  //   image:
+  //     "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=faces",
+  // },
   {
-    userId: 6,
-    username: "priya",
+    userId: 4,
+    name: "priya",
+    email: "priya@gmail.com",
     role: "Manager",
-    status: "Active",
+    status: "Inactive",
     created: "2024-06-10",
     image:
       "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces",
@@ -93,34 +99,34 @@ export const roles = [
       viewAnalytics: true,
     },
   },
+  // {
+  //   Id: 4,
+  //   rolename: "Guest",
+  //   description:
+  //     "Has limited access to view content but cannot make changes or access sensitive data.",
+  //   permissions: {
+  //     read: true,
+  //     write: true,
+  //     delete: false,
+  //     manageRoles: false,
+  //     viewAnalytics: false,
+  //   },
+  // },
+  // {
+  //   Id: 5,
+  //   rolename: "Moderator",
+  //   description:
+  //     "Can moderate user-generated content and manage user activities.",
+  //   permissions: {
+  //     read: true,
+  //     write: true,
+  //     delete: false,
+  //     manageRoles: true,
+  //     viewAnalytics: false,
+  //   },
+  // },
   {
     Id: 4,
-    rolename: "Guest",
-    description:
-      "Has limited access to view content but cannot make changes or access sensitive data.",
-    permissions: {
-      read: true,
-      write: true,
-      delete: false,
-      manageRoles: false,
-      viewAnalytics: false,
-    },
-  },
-  {
-    Id: 5,
-    rolename: "Moderator",
-    description:
-      "Can moderate user-generated content and manage user activities.",
-    permissions: {
-      read: true,
-      write: true,
-      delete: false,
-      manageRoles: true,
-      viewAnalytics: false,
-    },
-  },
-  {
-    Id: 6,
     rolename: "Super Admin",
     description:
       "Has the highest level of access, can perform any action across the platform, including system-level management.",
@@ -150,19 +156,19 @@ export const permissions = [
     permission: "Execute",
     description: "Allows execution of operations",
   },
-  {
-    id: 4,
-    permission: "Delete",
-    description: "Allows deletion of records",
-  },
-  {
-    id: 5,
-    permission: "Admin",
-    description: "Full administrative permissions",
-  },
-  {
-    id: 6,
-    permission: "View Reports",
-    description: "Permission to view reports",
-  },
+  // {
+  //   id: 4,
+  //   permission: "Delete",
+  //   description: "Allows deletion of records",
+  // },
+  // {
+  //   id: 5,
+  //   permission: "Admin",
+  //   description: "Full administrative permissions",
+  // },
+  // {
+  //   id: 6,
+  //   permission: "View Reports",
+  //   description: "Permission to view reports",
+  // },
 ];

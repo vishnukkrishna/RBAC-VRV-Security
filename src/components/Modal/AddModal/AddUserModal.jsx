@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-const AddUserModal = () => {
+const AddUserModal = ({ onAddUser }) => {
   const [modelOpen, setModelOpen] = useState(false);
 
   const [user, setUser] = useState({
@@ -9,9 +9,9 @@ const AddUserModal = () => {
     email: "",
     role: "Admin",
     status: "Active",
+    created: "",
   });
 
-  // Handle changes in input fields
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUser({
@@ -20,19 +20,39 @@ const AddUserModal = () => {
     });
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Normally, here you'd send the user data to the backend API
-    console.log("User details submitted:", user);
+    addUser(user);
+  };
 
-    // Assuming the user was successfully added to the backend, close the modal
+  const addUser = (userData) => {
+    const existingUsers = JSON.parse(sessionStorage.getItem("users")) || [];
+
+    const newUser = {
+      ...userData,
+      created: new Date().toISOString(),
+    };
+
+    existingUsers.push(newUser);
+
+    sessionStorage.setItem("users", JSON.stringify(existingUsers));
+
+    // Corrected: Pass the correct field name ('name' instead of 'username')
+    onAddUser({
+      name: user.name, // Change from 'username' to 'name'
+      email: user.email,
+      role: user.role,
+      status: user.status,
+      created: newUser.created, // Make sure to include 'created' here
+    });
+
+    console.log("User details submitted:", newUser);
+
     setModelOpen(false);
   };
 
   return (
     <div>
-      {/* Button to open modal */}
       <button
         onClick={() => setModelOpen(true)}
         className="flex items-center justify-center px-2 py-1 text-base pl-1 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-lg dark:bg-blue-600 dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50"
@@ -52,7 +72,6 @@ const AddUserModal = () => {
         <span>Invite Member</span>
       </button>
 
-      {/* Modal */}
       <AnimatePresence>
         {modelOpen && (
           <motion.div
@@ -98,7 +117,6 @@ const AddUserModal = () => {
                   </button>
                 </div>
 
-                {/* User Creation Form */}
                 <form onSubmit={handleSubmit} className="mt-5">
                   <div>
                     <label
@@ -175,7 +193,6 @@ const AddUserModal = () => {
                     </select>
                   </div>
 
-                  {/* Submit Button */}
                   <div className="flex justify-end mt-6">
                     <button
                       type="submit"

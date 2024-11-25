@@ -114,6 +114,16 @@ const Permissions = () => {
     }
   };
 
+  const handleAddPermission = (newPermission) => {
+    setPermissions((prevPermissions) => [
+      ...prevPermissions,
+      { id: Date.now(), ...newPermission },
+    ]);
+    toast.success("Permission added successfully!", {
+      position: "top-right",
+    });
+  };
+
   const handleDelete = (permissionId) => {
     Swal.fire({
       title: "Are you sure?",
@@ -225,7 +235,7 @@ const Permissions = () => {
             </div>
 
             <div className="flex justify-center items-center gap-3">
-              <AddPermissionModal />
+              <AddPermissionModal  onAddPermission={handleAddPermission}/>
               <button
                 className="flex items-center gap-2 bg-red-600 text-white px-2 py-1 rounded-lg hover:bg-red-700 transition-colors duration-300"
                 onClick={handleBulkDelete}
