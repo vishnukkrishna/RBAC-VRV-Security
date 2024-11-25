@@ -6,6 +6,7 @@ import { FaTrash, FaSearch, FaEdit } from "react-icons/fa";
 import Swal from "sweetalert2";
 import AddPermissionModal from "../Modal/AddModal/AddPermissionModal";
 import EditPermissionModal from "../Modal/EditModal/EditPermissionModal";
+import { permissions as importedPermissions } from "../Api/MockDatas";
 
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -31,62 +32,29 @@ const Permissions = () => {
     { key: "action", value: "Actions" },
   ];
 
-  const initialUsers = [
-    {
-      id: 1,
-      permission: "Read",
-      description: "Allows reading of data",
-    },
-    {
-      id: 2,
-      permission: "Write",
-      description: "Allows writing of data",
-    },
-    {
-      id: 3,
-      permission: "Execute",
-      description: "Allows execution of operations",
-    },
-    {
-      id: 4,
-      permission: "Delete",
-      description: "Allows deletion of records",
-    },
-    {
-      id: 5,
-      permission: "Admin",
-      description: "Full administrative permissions",
-    },
-    {
-      id: 6,
-      permission: "View Reports",
-      description: "Permission to view reports",
-    },
-  ];
-
-  const [users, setUsers] = useState(initialUsers);
+  const [permissions, setPermissions] = useState(importedPermissions);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editPermissionData, setEditPermissionData] = useState(null);
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [permissionFilter, setPermissionFilter] = useState(""); // New state for filtering by permission
+  const [permissionFilter, setPermissionFilter] = useState("");
   const [sortConfig, setSortConfig] = useState({ key: "id", direction: "asc" });
   const [currentPage, setCurrentPage] = useState(1);
   const rowsPerPage = 5;
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const filteredUsers = users.filter((user) => {
+  const filteredPermissions = permissions.filter((permission) => {
     const matchesSearch =
-      user.permission
+      permission.permission
         .toLowerCase()
         .includes(debouncedSearchTerm.toLowerCase()) ||
-      user.description
+      permission.description
         .toLowerCase()
         .includes(debouncedSearchTerm.toLowerCase());
 
     const matchesPermissionFilter =
-      permissionFilter === "" || user.permission === permissionFilter;
+      permissionFilter === "" || permission.permission === permissionFilter;
 
     return matchesSearch && matchesPermissionFilter;
   });
@@ -99,7 +67,7 @@ const Permissions = () => {
     setSortConfig({ key, direction });
   };
 
-  const sortedUsers = filteredUsers.sort((a, b) => {
+  const sortedPermissions = filteredPermissions.sort((a, b) => {
     if (a[sortConfig.key] < b[sortConfig.key])
       return sortConfig.direction === "asc" ? -1 : 1;
     if (a[sortConfig.key] > b[sortConfig.key])
@@ -107,11 +75,11 @@ const Permissions = () => {
     return 0;
   });
 
-  const paginatedUsers = sortedUsers.slice(
+  const paginatedUsers = sortedPermissions.slice(
     (currentPage - 1) * rowsPerPage,
     currentPage * rowsPerPage
   );
-  const totalPages = Math.ceil(sortedUsers.length / rowsPerPage);
+  const totalPages = Math.ceil(sortedPermissions.length / rowsPerPage);
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
@@ -129,25 +97,27 @@ const Permissions = () => {
   const selectAllCheckbox = (event) => {
     const newSelectedRows = [];
     if (event.target.checked) {
-      users.forEach((user) => {
-        newSelectedRows.push(user.id);
+      permissions.forEach((permission) => {
+        newSelectedRows.push(permission.id);
       });
     }
     setSelectedRows(newSelectedRows);
   };
 
-  const handleEdit = (userId) => {
-    const userToEdit = users.find((user) => user.id === userId);
-    if (userToEdit) {
-      setEditPermissionData(userToEdit);
+  const handleEdit = (permissionId) => {
+    const permissionToEdit = permissions.find(
+      (permission) => permission.id === permissionId
+    );
+    if (permissionToEdit) {
+      setEditPermissionData(permissionToEdit);
       setIsModalOpen(true);
     }
   };
 
-  const handleDelete = (userId) => {
+  const handleDelete = (permissionId) => {
     Swal.fire({
       title: "Are you sure?",
-      text: `You are about to delete permission with ID ${userId}. This action cannot be undone.`,
+      text: `You are about to delete permission with ID ${permissionId}. This action cannot be undone.`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Yes, delete it!",
@@ -155,10 +125,15 @@ const Permissions = () => {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        setUsers(users.filter((user) => user.id !== userId));
-        toast.success(`Permission with ID ${userId} deleted successfully`, {
-          position: "top-right",
-        });
+        setPermissions(
+          permissions.filter((permission) => permission.id !== permissionId)
+        );
+        toast.success(
+          `Permission with ID ${permissionId} deleted successfully`,
+          {
+            position: "top-right",
+          }
+        );
       }
     });
   };
@@ -181,7 +156,11 @@ const Permissions = () => {
       reverseButtons: true,
     }).then((result) => {
       if (result.isConfirmed) {
-        setUsers(users.filter((user) => !selectedRows.includes(user.id)));
+        setPermissions(
+          permissions.filter(
+            (permission) => !selectedRows.includes(permission.id)
+          )
+        );
         toast.success(
           `${selectedRows.length} permission(s) deleted successfully`,
           {
@@ -194,9 +173,9 @@ const Permissions = () => {
   };
 
   const handleSaveEdit = (updatedPermission) => {
-    setUsers((prevUsers) =>
-      prevUsers.map((user) =>
-        user.id === updatedPermission.id ? updatedPermission : user
+    setPermissions((prevPermission) =>
+      prevPermission.map((permission) =>
+        permission.id === updatedPermission.id ? updatedPermission : permission
       )
     );
     toast.success("Permission updated successfully!", {
@@ -206,7 +185,7 @@ const Permissions = () => {
 
   // Get unique permissions for the filter dropdown
   const uniquePermissions = Array.from(
-    new Set(users.map((user) => user.permission))
+    new Set(permissions.map((permission) => permission.permission))
   );
 
   return (
@@ -283,32 +262,32 @@ const Permissions = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedUsers.map((user) => (
+                {paginatedUsers.map((permission) => (
                   <tr
-                    key={user.id}
+                    key={permission.id}
                     className="hover:bg-gray-50 transition duration-200"
                   >
                     <td className="px-6 py-4">
                       <input
                         type="checkbox"
                         className="rowCheckbox"
-                        checked={selectedRows.includes(user.id)}
-                        onChange={(event) => getRowDetail(event, user.id)}
+                        checked={selectedRows.includes(permission.id)}
+                        onChange={(event) => getRowDetail(event, permission.id)}
                       />
                     </td>
-                    <td className="px-6 py-4">{user.id}</td>
-                    <td className="px-6 py-4">{user.permission}</td>
-                    <td className="px-6 py-4">{user.description}</td>
+                    <td className="px-6 py-4">{permission.id}</td>
+                    <td className="px-6 py-4">{permission.permission}</td>
+                    <td className="px-6 py-4">{permission.description}</td>
                     <td className="px-6 py-4 flex items-center gap-5">
                       <button
                         className="text-blue-600 hover:text-blue-800 transition-colors duration-300"
-                        onClick={() => handleEdit(user.id)}
+                        onClick={() => handleEdit(permission.id)}
                       >
                         <FaEdit size={23} />
                       </button>
                       <button
                         className="text-red-600 hover:text-red-800 transition-colors duration-300"
-                        onClick={() => handleDelete(user.id)}
+                        onClick={() => handleDelete(permission.id)}
                       >
                         <FaTrash size={23} />
                       </button>

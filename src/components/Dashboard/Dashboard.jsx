@@ -1,12 +1,27 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../Common/Navbar";
 import { FaUsers } from "react-icons/fa";
 import { MdSecurity } from "react-icons/md";
 import { FaKey } from "react-icons/fa";
 import { IoMdPeople } from "react-icons/io";
+import { users, roles, permissions } from "../Api/MockDatas";
 
 const Dashboard = () => {
+  const [totalUsers, setTotalUsers] = useState(0);
+  const [totalRoles, setTotalRoles] = useState(0);
+  const [totalPermissions, setTotalPermissions] = useState(0);
+
+  useEffect(() => {
+    const calculateTotals = () => {
+      setTotalUsers(users.length);
+      setTotalRoles(roles.length);
+      setTotalPermissions(permissions.length);
+    };
+
+    calculateTotals();
+  }, []);
+
   return (
     <div className="p-4 sm:p-6 md:p-8">
       <Navbar />
@@ -16,6 +31,7 @@ const Dashboard = () => {
           <main className="h-full overflow-y-auto">
             <div className="container mx-auto grid">
               <div className="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+                {/* Total Users */}
                 <Link
                   to="/users"
                   className="flex items-center p-4 rounded-lg shadow-xs dark:bg-gray-800 border hover:bg-orange-200 hover:text-black transition-all"
@@ -28,11 +44,12 @@ const Dashboard = () => {
                       Total Users
                     </p>
                     <p className="text-lg font-semibold text-gray-200 hover:text-gray-600">
-                      10
+                      {totalUsers}
                     </p>
                   </div>
                 </Link>
 
+                {/* Total Roles */}
                 <Link
                   to="/roles"
                   className="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 border border-white hover:bg-green-200 hover:text-black transition-all"
@@ -45,11 +62,12 @@ const Dashboard = () => {
                       Roles
                     </p>
                     <p className="text-lg font-semibold text-gray-200 hover:text-gray-600">
-                      24
+                      {totalRoles}
                     </p>
                   </div>
                 </Link>
 
+                {/* Total Permissions */}
                 <Link
                   to="/permissions"
                   className="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 border border-white hover:bg-teal-200 hover:text-black transition-all"
@@ -62,11 +80,12 @@ const Dashboard = () => {
                       Permissions
                     </p>
                     <p className="text-lg font-semibold text-gray-200 hover:text-gray-600">
-                      376
+                      {totalPermissions}
                     </p>
                   </div>
                 </Link>
 
+                {/* Active Users */}
                 <Link
                   to="/users"
                   className="flex items-center p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800 border border-white hover:bg-blue-200 hover:text-black transition-all"
@@ -79,7 +98,7 @@ const Dashboard = () => {
                       Active Users
                     </p>
                     <p className="text-lg font-semibold text-gray-200 hover:text-gray-600">
-                      35
+                      {users.filter((user) => user.status === "Active").length}
                     </p>
                   </div>
                 </Link>

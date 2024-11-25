@@ -24,7 +24,7 @@ export const users = [
     userId: 4,
     username: "arun",
     role: "Manager",
-    status: "Active",
+    status: "Inactive",
     created: "2024-04-05",
   },
   {
@@ -49,57 +49,78 @@ export const roles = [
     rolename: "Admin",
     description:
       "Has full access to all resources and can manage all users and data.",
-    permissions: [
-      "Read",
-      "Write",
-      "Execute",
-      "Delete",
-      "Manage Users",
-      "Manage Roles",
-    ],
+    permissions: {
+      read: true,
+      write: true,
+      delete: true,
+      manageRoles: true,
+      viewAnalytics: true,
+    },
   },
   {
     Id: 2,
     rolename: "User",
     description:
       "Can read and write their own data, but cannot modify others' data.",
-    permissions: ["Read", "Write"],
+    permissions: {
+      read: true,
+      write: false,
+      delete: false,
+      manageRoles: false,
+      viewAnalytics: true,
+    },
   },
   {
     Id: 3,
     rolename: "Manager",
     description:
       "Can manage users, assign roles, and view reports, but cannot delete data.",
-    permissions: ["Read", "Write", "Manage Users", "View Reports"],
+    permissions: {
+      read: true,
+      write: true,
+      delete: false,
+      manageRoles: false,
+      viewAnalytics: true,
+    },
   },
   {
     Id: 4,
     rolename: "Guest",
     description:
       "Has limited access to view content but cannot make changes or access sensitive data.",
-    permissions: ["Read"],
+    permissions: {
+      read: true,
+      write: true,
+      delete: false,
+      manageRoles: false,
+      viewAnalytics: false,
+    },
   },
   {
     Id: 5,
     rolename: "Moderator",
     description:
       "Can moderate user-generated content and manage user activities.",
-    permissions: ["Read", "Write", "Manage Content", "Moderate Comments"],
+    permissions: {
+      read: true,
+      write: true,
+      delete: false,
+      manageRoles: true,
+      viewAnalytics: false,
+    },
   },
   {
     Id: 6,
     rolename: "Super Admin",
     description:
       "Has the highest level of access, can perform any action across the platform, including system-level management.",
-    permissions: [
-      "Read",
-      "Write",
-      "Execute",
-      "Delete",
-      "Manage Users",
-      "Manage Roles",
-      "System Configuration",
-    ],
+    permissions: {
+      read: true,
+      write: true,
+      delete: false,
+      manageRoles: false,
+      viewAnalytics: false,
+    },
   },
 ];
 
