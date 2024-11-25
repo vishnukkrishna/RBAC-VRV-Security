@@ -37,13 +37,12 @@ const AddUserModal = ({ onAddUser }) => {
 
     sessionStorage.setItem("users", JSON.stringify(existingUsers));
 
-    // Corrected: Pass the correct field name ('name' instead of 'username')
     onAddUser({
-      name: user.name, // Change from 'username' to 'name'
+      name: user.name,
       email: user.email,
       role: user.role,
       status: user.status,
-      created: newUser.created, // Make sure to include 'created' here
+      created: newUser.created,
     });
 
     console.log("User details submitted:", newUser);
