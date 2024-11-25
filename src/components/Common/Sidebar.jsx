@@ -28,7 +28,10 @@ const Sidebar = () => {
         } sm:translate-x-0`}
       >
         <div className="w-full flex justify-center py-4 mb-8 border-b border-gray-700">
-          <Link to={'/dashboard'} className="text-2xl font-bold text-white tracking-wide cursor-pointer">
+          <Link
+            to={"/dashboard"}
+            className="text-2xl font-bold text-white tracking-wide cursor-pointer"
+          >
             RBAC
           </Link>
         </div>
