@@ -36,7 +36,6 @@ const EditRoleModal = ({ roleData, isOpen, onClose, onSave }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting role:", role);
     if (typeof onSave === "function") {
       onSave(role);
     } else {

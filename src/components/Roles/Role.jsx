@@ -46,14 +46,6 @@ const Role = () => {
 
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const [permissions, setPermissions] = useState({
-    read: false,
-    write: false,
-    delete: false,
-    manageRoles: false,
-    viewAnalytics: false,
-  });
-
   const getFilteredRoles = () => {
     return roles
       .filter((role) => {
@@ -133,7 +125,7 @@ const Role = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         setRoles(roles.filter((role) => role.Id !== id));
-        toast.success(`Role with ID ${id} deleted successfully`, {
+        toast(`Role with ID ${id} deleted successfully`, {
           position: "top-right",
         });
       }
@@ -157,7 +149,7 @@ const Role = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         setRoles(roles.filter((role) => !selectedRows.includes(role.Id)));
-        toast.success(`${selectedRows.length} role(s) deleted successfully`, {
+        toast(`${selectedRows.length} role(s) deleted successfully`, {
           position: "top-right",
         });
         setSelectedRows([]);
@@ -167,12 +159,16 @@ const Role = () => {
 
   const handleAddRole = (newRoleData) => {
     const newRole = {
-      ...newRoleData,
-      permissions,
+      Id: roles.length + 1,
+      rolename: newRoleData.rolename,
+      description: newRoleData.description,
+      permissions: {
+        ...newRoleData.permissions,
+      },
     };
 
     setRoles((prevRoles) => [...prevRoles, newRole]);
-    console.log("New Role Added:", newRole);
+    toast("New role added successfully!", { position: "top-right" });
   };
 
   return (
@@ -199,7 +195,10 @@ const Role = () => {
               >
                 <option value="">Filter by Role</option>
                 {roles.map((role) => (
-                  <option key={role.Id} value={role.rolename}>
+                  <option
+                    key={`${role.Id}-${role.rolename}`}
+                    value={role.rolename}
+                  >
                     {role.rolename}
                   </option>
                 ))}
@@ -239,7 +238,10 @@ const Role = () => {
               </thead>
               <tbody>
                 {paginatedRoles.map((role) => (
-                  <tr key={role.Id} className="hover:bg-gray-50">
+                  <tr
+                    key={`${role.Id}-${role.rolename}`}
+                    className="hover:bg-gray-50"
+                  >
                     <td className="px-6 py-4">
                       <input
                         type="checkbox"
@@ -256,7 +258,7 @@ const Role = () => {
                           .filter(([, isActive]) => isActive)
                           .map(([permission]) => (
                             <div
-                              key={permission}
+                              key={`${role.Id}-${permission}`}
                               className="flex items-center space-x-2 pl-3"
                             >
                               <input

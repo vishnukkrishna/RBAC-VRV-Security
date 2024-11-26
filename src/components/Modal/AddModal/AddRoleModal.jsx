@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 const AddRoleModal = ({ onAddRole }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const [roleData, setRoleData] = useState({
+  const [role, setRole] = useState({
     rolename: "",
     description: "",
     permissions: {
@@ -19,50 +19,47 @@ const AddRoleModal = ({ onAddRole }) => {
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setRoleData({
-      ...roleData,
+    setRole((prevRole) => ({
+      ...prevRole,
       [name]: value,
-    });
+    }));
   };
 
-  const handlePermissionChange = (e) => {
-    const { name, checked } = e.target;
-
-    setRoleData((prevState) => {
-      const updatedState = {
-        ...prevState,
-        permissions: {
-          ...prevState.permissions,
-          [name]: checked,
-        },
-      };
-      console.log("Updated Permissions State:", updatedState.permissions); // Debugging
-      return updatedState;
-    });
+  const handlePermissionChange = (permissionName) => {
+    setRole((prevRole) => ({
+      ...prevRole,
+      permissions: {
+        ...prevRole.permissions,
+        [permissionName]: !prevRole.permissions[permissionName],
+      },
+    }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!roleData.rolename || !roleData.description) {
-      alert("Please fill in both the role name and description.");
+
+    if (!role.rolename || !role.description) {
+      toast.error("Please provide both role name and description.", {
+        position: "top-right",
+      });
       return;
     }
 
-    // Call parent handler
-    onAddRole(roleData);
+    onAddRole(role);
 
-    const resetPermissions = () => {
-      setRoleData((prevState) => ({
-        ...prevState,
-        permissions: {},
-      }));
-    };
-
-    // Example usage:
-    resetPermissions();
+    setRole({
+      rolename: "",
+      description: "",
+      permissions: {
+        read: false,
+        write: false,
+        delete: false,
+        manageRoles: false,
+        viewAnalytics: false,
+      },
+    });
 
     setModalOpen(false);
-    toast("Role successfully added!");
   };
 
   return (
@@ -141,7 +138,7 @@ const AddRoleModal = ({ onAddRole }) => {
                     <input
                       id="rolename"
                       name="rolename"
-                      value={roleData.rolename}
+                      value={role.rolename}
                       onChange={handleInputChange}
                       placeholder="Enter role..."
                       type="text"
@@ -159,7 +156,7 @@ const AddRoleModal = ({ onAddRole }) => {
                     <textarea
                       id="description"
                       name="description"
-                      value={roleData.description}
+                      value={role.description}
                       onChange={handleInputChange}
                       placeholder="Enter role description..."
                       className="block w-full px-3 py-2 mt-2 text-gray-600 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-indigo-400 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-40"
@@ -172,26 +169,25 @@ const AddRoleModal = ({ onAddRole }) => {
                       Permissions
                     </label>
                     <div className="grid grid-cols-2 gap-4 mt-2">
-                      {Object.keys(roleData.permissions).map(
-                        (permissionKey) => (
-                          <label
-                            key={permissionKey}
-                            className="inline-flex items-center"
-                          >
-                            <input
-                              type="checkbox"
-                              name={permissionKey} // Matches key in roleData.permissions
-                              checked={roleData.permissions[permissionKey]} // Checked state
-                              onChange={handlePermissionChange} // Update handler
-                              className="form-checkbox text-indigo-600 transition duration-300"
-                            />
-                            <span className="ml-2 text-gray-700">
-                              {permissionKey.replace(/([A-Z])/g, " $1").trim()}{" "}
-                              {/* Formatting */}
-                            </span>
-                          </label>
-                        )
-                      )}
+                      {Object.keys(role.permissions).map((permissionKey) => (
+                        <label
+                          key={permissionKey}
+                          className="inline-flex items-center"
+                        >
+                          <input
+                            type="checkbox"
+                            name={permissionKey}
+                            checked={role.permissions[permissionKey]}
+                            onChange={() =>
+                              handlePermissionChange(permissionKey)
+                            }
+                            className="form-checkbox text-indigo-600 transition duration-300"
+                          />
+                          <span className="ml-2 text-gray-700">
+                            {permissionKey.replace(/([A-Z])/g, " $1").trim()}
+                          </span>
+                        </label>
+                      ))}
                     </div>
                   </div>
 

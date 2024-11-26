@@ -142,7 +142,7 @@ const User = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         setUsers(users.filter((user) => user.userId !== userId));
-        toast.success(`User with ID ${userId} deleted successfully`, {
+        toast(`User with ID ${userId} deleted successfully`, {
           position: "top-right",
         });
       }
@@ -166,7 +166,7 @@ const User = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         setUsers(users.filter((user) => !selectedRows.includes(user.userId)));
-        toast.success(`${selectedRows.length} user(s) deleted successfully`, {
+        toast(`${selectedRows.length} user(s) deleted successfully`, {
           position: "top-right",
         });
         setSelectedRows([]);
@@ -176,7 +176,7 @@ const User = () => {
 
   const handleAddUser = (newUser) => {
     setUsers((prevUser) => [...prevUser, { id: Date.now(), ...newUser }]);
-    toast.success("User added successfully", { position: "top-right" });
+    toast("User added successfully", { position: "top-right" });
   };
 
   return (
@@ -274,7 +274,7 @@ const User = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedUsers.map((user) => (
+                {paginatedUsers.map((user, index) => (
                   <tr
                     key={`${user.userId}-${user.name}`}
                     className="hover:bg-gray-50"
@@ -287,7 +287,10 @@ const User = () => {
                         onChange={(e) => getRowDetail(e, user.userId)}
                       />
                     </td>
-                    <td className="px-6 py-4">{user.userId}</td>
+                    <td className="px-6 py-4">
+                      {(currentPage - 1) * rowsPerPage + index + 1}
+                    </td>
+
                     <td className="px-6 py-4">
                       <img
                         src={

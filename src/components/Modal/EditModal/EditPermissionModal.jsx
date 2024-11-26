@@ -25,7 +25,6 @@ const EditPermissionModal = ({ permissionData, isOpen, onClose, onSave }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Edited Permission details submitted:", permission);
     onSave(permission);
     onClose();
     toast("Sucessfully edited");

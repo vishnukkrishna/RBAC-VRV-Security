@@ -45,8 +45,6 @@ const AddUserModal = ({ onAddUser }) => {
       created: newUser.created,
     });
 
-    console.log("User details submitted:", newUser);
-
     setModelOpen(false);
   };
 

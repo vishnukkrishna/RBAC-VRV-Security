@@ -119,7 +119,7 @@ const Permissions = () => {
       ...prevPermissions,
       { id: Date.now(), ...newPermission },
     ]);
-    toast.success("Permission added successfully!", {
+    toast("Permission added successfully!", {
       position: "top-right",
     });
   };
@@ -138,7 +138,7 @@ const Permissions = () => {
         setPermissions(
           permissions.filter((permission) => permission.id !== permissionId)
         );
-        toast.success(
+        toast(
           `Permission with ID ${permissionId} deleted successfully`,
           {
             position: "top-right",
@@ -171,7 +171,7 @@ const Permissions = () => {
             (permission) => !selectedRows.includes(permission.id)
           )
         );
-        toast.success(
+        toast(
           `${selectedRows.length} permission(s) deleted successfully`,
           {
             position: "top-right",
@@ -268,7 +268,7 @@ const Permissions = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedUsers.map((permission) => (
+                {paginatedUsers.map((permission,index) => (
                   <tr
                     key={permission.id}
                     className="hover:bg-gray-50 transition duration-200"
@@ -281,7 +281,9 @@ const Permissions = () => {
                         onChange={(event) => getRowDetail(event, permission.id)}
                       />
                     </td>
-                    <td className="px-6 py-4">{permission.id}</td>
+                    <td className="px-6 py-4">
+                      {(currentPage - 1) * rowsPerPage + index + 1}
+                    </td>
                     <td className="px-6 py-4">{permission.permission}</td>
                     <td className="px-6 py-4">{permission.description}</td>
                     <td className="px-6 py-4 flex items-center gap-5">

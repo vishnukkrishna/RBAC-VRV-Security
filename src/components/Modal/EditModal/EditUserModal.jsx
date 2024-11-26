@@ -26,7 +26,6 @@ const EditUserModal = ({ userData, isOpen, onClose, onSave }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Submitting user:", user);
     if (typeof onSave === "function") {
       onSave(user);
     } else {
