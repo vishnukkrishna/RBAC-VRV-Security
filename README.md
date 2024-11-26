@@ -21,6 +21,7 @@ This project is a **Role-Based Access Control (RBAC)** User Interface built as p
 The **RBAC UI** allows administrators to perform key operations related to user, role, and permission management. It emphasizes a clean design, dynamic animations, and responsiveness to ensure seamless functionality across devices.
 
 ### **Core Requirements Addressed:**
+
 - **User Management**: Add, edit, delete, and assign roles to users.
 - **Role Management**: Define roles and manage associated permissions.
 - **Dynamic Permissions**: Assign permissions dynamically to roles.
@@ -31,20 +32,24 @@ The **RBAC UI** allows administrators to perform key operations related to user,
 ## **Features**
 
 ### **User Management**
+
 - View a list of users in a responsive table format.
 - Add, edit, or delete users dynamically.
 - Assign roles and manage user statuses (e.g., Active/Inactive).
 
 ### **Role Management**
+
 - Create, edit, or delete roles.
 - Manage permissions for roles dynamically.
 - Display permissions in an intuitive UI.
 
 ### **Permission Handling**
+
 - Assign, remove, and customize permissions for specific roles.
 - Modular permission categories (e.g., Read, Write, Delete).
 
 ### **UI/UX**
+
 - Responsive design using **Tailwind CSS** for a seamless experience across all devices.
 - Animations powered by **Framer Motion** for smooth transitions and user feedback.
 
@@ -77,45 +82,59 @@ Here are some planned features that can further improve the application:
 To run the project locally, follow these steps:
 
 ### **Prerequisites**
+
 - Node.js installed (v16+)
 - Git installed
 
 ### **Installation**
+
 1. Clone the repository:
+
    ```bash
    git clone https://github.com/vishnukkrishna/RBAC-VRV-Security.git
    cd RBAC-VRV-Security
 
+   ```
+
 2. Install dependencies:
+
    ```bash
    npm install
 
+   ```
+
 3. Start the development server:
+
    ```bash
    npm run dev
+
+   ```
 
 4. Open your browser and navigate to:
    ```bash
    http://localhost:5173
+   ```
 
 ## **Live Demo**:
-  **The application is live and can be accessed here**:
-  
-   [**RBAC UI Live**](https://rbac-vrv-security.vercel.app)
 
+**The application is live and can be accessed here**:
+
+[**RBAC UI Live**](https://rbac-vrv-security.vercel.app)
 
 ## **Screenshots**
 
 ### Dashboard
+
 ![Dashboard](./public/images/dashboard.png)
 
 ### User Management
+
 ![User Management](./public/images/user.png)
 
 ### Role Management
+
 ![Role Management](./public/images/role.png)
 
 ### Permission Management
+
 ![Permission Management](./public/images/permission.png)
-
-
