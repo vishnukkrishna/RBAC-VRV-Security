@@ -50,7 +50,7 @@ const AddPermissionModal = ({ onAddPermission }) => {
     <div>
       <button
         onClick={() => setModalOpen(true)}
-        className="flex items-center justify-center px-2 py-1 text-base pl-1 tracking-wide text-white transition-colors duration-200 transform bg-[#001F3F] rounded-lg dark:bg-[#001F3F] dark:hover:bg-indigo-700 dark:focus:bg-indigo-700 hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50"
+        className="flex items-center justify-center px-2 py-1 text-base pl-1 tracking-wide text-white transition-colors duration-200 transform bg-[#001F3F] rounded-lg hover:bg-indigo-600"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

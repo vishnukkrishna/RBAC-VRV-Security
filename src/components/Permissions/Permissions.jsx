@@ -231,7 +231,7 @@ const Permissions = () => {
                 className="flex items-center gap-2 bg-red-600 text-white px-2 py-1 rounded-lg hover:bg-red-700 transition-colors duration-300"
                 onClick={handleBulkDelete}
               >
-                <FaTrash className="w-5 h-5" />
+                <FaTrash className="" />
                 Delete Selected
               </button>
             </div>

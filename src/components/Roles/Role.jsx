@@ -179,30 +179,36 @@ const Role = () => {
           <h1 className="text-2xl sm:text-3xl font-bold mb-4">Role Table</h1>
 
           <div className="mb-4 flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0">
-            <div className="relative flex gap-5">
-              <input
-                type="text"
-                className="p-2 pl-10 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-600"
-                placeholder="Search roles..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
-              <select
-                className="p-1 border rounded-lg w-36 sm:w-52 focus:outline-none focus:ring-2 focus:ring-blue-600"
-                value={filter.role}
-                onChange={(e) => setFilter({ ...filter, role: e.target.value })}
-              >
-                <option value="">Filter by Role</option>
-                {roles.map((role) => (
-                  <option
-                    key={`${role.Id}-${role.rolename}`}
-                    value={role.rolename}
-                  >
-                    {role.rolename}
-                  </option>
-                ))}
-              </select>
+            <div className="flex flex-col sm:flex-row sm:space-x-4 w-full sm:w-auto items-start sm:items-center">
+              <div className="relative w-full sm:w-56">
+                <input
+                  type="text"
+                  className="p-2 pl-10 border rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-600"
+                  placeholder="Search roles..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+                <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+              </div>
+              <div className="relative w-full sm:w-56 md:mt-0 mt-3">
+                <select
+                  className="p-2 pl-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out w-full"
+                  value={filter.role}
+                  onChange={(e) =>
+                    setFilter({ ...filter, role: e.target.value })
+                  }
+                >
+                  <option value="">Filter by Role</option>
+                  {roles.map((role) => (
+                    <option
+                      key={`${role.Id}-${role.rolename}`}
+                      value={role.rolename}
+                    >
+                      {role.rolename}
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
             <div className="flex gap-3">
               <AddRole onAddRole={handleAddRole} />
