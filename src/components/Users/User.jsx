@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 import AddUserModal from "../Modal/AddModal/AddUserModal";
 import EditUserModal from "../Modal/EditModal/EditUserModal";
 import { users as importedUsers } from "../Api/MockDatas";
+import { roles as importedRoles } from "../Api/MockDatas";
 
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -207,16 +208,16 @@ const User = () => {
                 <option value="" className="text-gray-600">
                   Filter by Role
                 </option>
-                <option value="Admin" className="text-gray-600">
-                  Admin
-                </option>
-                <option value="User" className="text-gray-600">
-                  User
-                </option>
-                <option value="Moderator" className="text-gray-600">
-                  Moderator
-                </option>
-              </select>
+                {importedRoles.map((role, index) => (
+                  <option
+                    key={index}
+                    value={role.rolename}
+                    className="text-gray-600"
+                  >
+                    {role.rolename}
+                  </option>
+                ))}
+              </select> 
 
               <select
                 className="p-2 border rounded-lg w-full sm:w-40 mt-2 sm:mt-0 focus:outline-none focus:ring-2 focus:ring-blue-600 transition duration-300 ease-in-out"
