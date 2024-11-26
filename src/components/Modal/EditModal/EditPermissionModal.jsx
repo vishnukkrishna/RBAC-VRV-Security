@@ -115,7 +115,7 @@ const EditPermissionModal = ({ permissionData, isOpen, onClose, onSave }) => {
                 <div className="flex justify-end mt-6">
                   <button
                     type="submit"
-                    className="px-3 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50"
+                    className="px-3 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-[#001F3F] rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-500 focus:ring focus:ring-indigo-300 focus:ring-opacity-50"
                   >
                     Save Changes
                   </button>

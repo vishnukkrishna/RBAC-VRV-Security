@@ -174,7 +174,7 @@ const Role = () => {
   return (
     <div className="p-4 sm:p-6 md:p-8">
       <Navbar />
-      <div className="bg-white rounded-lg shadow-md mt-6 p-6 sm:p-8">
+      <div className="bg-[#e7e7f0] rounded-lg shadow-md mt-6 p-6 sm:p-8">
         <div className="container mx-auto">
           <h1 className="text-2xl sm:text-3xl font-bold mb-4">Role Table</h1>
 
@@ -240,7 +240,7 @@ const Role = () => {
                 {paginatedRoles.map((role) => (
                   <tr
                     key={`${role.Id}-${role.rolename}`}
-                    className="hover:bg-gray-50"
+                    className="hover:bg-gray-50 border-b border-gray-300"
                   >
                     <td className="px-6 py-4">
                       <input
@@ -253,7 +253,7 @@ const Role = () => {
                     <td className="px-6 py-4">{role.rolename}</td>
                     <td className="px-6 py-4">{role.description}</td>
                     <td className="px-6 py-4">
-                      <div className="flex flex-wrap gap-5 border rounded">
+                      <div className="flex flex-wrap gap-5 border border-gray-300 rounded">
                         {Object.entries(role.permissions)
                           .filter(([, isActive]) => isActive)
                           .map(([permission]) => (
@@ -276,7 +276,7 @@ const Role = () => {
                     </td>
                     <td className="px-6 py-4 flex gap-5">
                       <button
-                        className="text-blue-600 hover:text-blue-800"
+                        className="text-[#001F3F] hover:text-blue-800"
                         onClick={() => handleEdit(role.Id)}
                       >
                         <FaEdit size={23} />
@@ -305,7 +305,7 @@ const Role = () => {
                   key={i}
                   className={`px-3 py-1 rounded-lg ${
                     i + 1 === currentPage
-                      ? "bg-blue-600 text-white"
+                      ? "bg-[#001F3F] text-white"
                       : "bg-gray-200 text-gray-700"
                   }`}
                   onClick={() => handlePageChange(i + 1)}

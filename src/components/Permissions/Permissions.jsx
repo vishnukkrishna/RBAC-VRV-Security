@@ -138,12 +138,9 @@ const Permissions = () => {
         setPermissions(
           permissions.filter((permission) => permission.id !== permissionId)
         );
-        toast(
-          `Permission with ID ${permissionId} deleted successfully`,
-          {
-            position: "top-right",
-          }
-        );
+        toast(`Permission with ID ${permissionId} deleted successfully`, {
+          position: "top-right",
+        });
       }
     });
   };
@@ -171,12 +168,9 @@ const Permissions = () => {
             (permission) => !selectedRows.includes(permission.id)
           )
         );
-        toast(
-          `${selectedRows.length} permission(s) deleted successfully`,
-          {
-            position: "top-right",
-          }
-        );
+        toast(`${selectedRows.length} permission(s) deleted successfully`, {
+          position: "top-right",
+        });
         setSelectedRows([]);
       }
     });
@@ -198,7 +192,7 @@ const Permissions = () => {
     <div className="p-4 sm:p-6 md:p-8">
       <Navbar />
       <ToastContainer />
-      <div className="bg-white rounded-lg shadow-md mt-6 p-6 sm:p-8">
+      <div className="bg-[#e7e7f0] rounded-lg shadow-md mt-6 p-6 sm:p-8">
         <div className="container mx-auto">
           <h1 className="text-2xl sm:text-3xl font-bold mb-4">
             Permission Table
@@ -268,10 +262,10 @@ const Permissions = () => {
                 </tr>
               </thead>
               <tbody>
-                {paginatedUsers.map((permission,index) => (
+                {paginatedUsers.map((permission, index) => (
                   <tr
                     key={permission.id}
-                    className="hover:bg-gray-50 transition duration-200"
+                    className="hover:bg-gray-50 border-b border-gray-300"
                   >
                     <td className="px-6 py-4">
                       <input
@@ -288,7 +282,7 @@ const Permissions = () => {
                     <td className="px-6 py-4">{permission.description}</td>
                     <td className="px-6 py-4 flex items-center gap-5">
                       <button
-                        className="text-blue-600 hover:text-blue-800 transition-colors duration-300"
+                        className="text-[#001F3F] hover:text-blue-800 transition-colors duration-300"
                         onClick={() => handleEdit(permission.id)}
                       >
                         <FaEdit size={23} />
@@ -327,7 +321,7 @@ const Permissions = () => {
                   key={i}
                   className={`px-3 py-1 rounded-lg ${
                     i + 1 === currentPage
-                      ? "bg-blue-600 text-white"
+                      ? "bg-[#001F3F] text-white"
                       : "bg-gray-200 text-gray-700"
                   } hover:bg-blue-700 hover:text-white transition-colors duration-300`}
                   onClick={() => handlePageChange(i + 1)}

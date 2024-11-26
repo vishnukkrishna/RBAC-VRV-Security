@@ -16,7 +16,7 @@ export const users = [
     role: "User",
     status: "Inactive",
     created: "2024-02-15",
-    image: "https://example.com/images/jishnu.jpg",
+    image: "",
   },
   {
     userId: 3,

@@ -23,11 +23,11 @@ const Sidebar = () => {
   return (
     <div className="relative">
       <aside
-        className={`fixed top-0 left-0 h-screen pt-5 bg-gray-900 text-white z-40 sm:w-64 w-60 shadow-lg transition-all duration-75 ease-linear ${
+        className={`fixed top-0 left-0 h-screen bg-[#001F3F] text-white z-40 sm:w-64 w-60 shadow-lg transition-transform duration-300 ease-in-out ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } sm:translate-x-0`}
       >
-        <div className="w-full flex justify-center py-4 mb-8 border-b border-gray-700">
+        <div className="w-full flex justify-center py-7 mb-8 border-b border-gray-700">
           <Link
             to={"/dashboard"}
             className="text-2xl font-bold text-white tracking-wide cursor-pointer"

@@ -66,7 +66,7 @@ const AddRoleModal = ({ onAddRole }) => {
     <div>
       <button
         onClick={() => setModalOpen(true)}
-        className="flex items-center justify-center px-2 py-1 text-base pl-1 tracking-wide text-white transition-colors duration-200 transform bg-blue-800 rounded-lg hover:bg-indigo-600"
+        className="flex items-center justify-center px-2 py-1 text-base pl-1 tracking-wide text-white transition-colors duration-200 transform bg-[#001F3F] rounded-lg hover:bg-indigo-600"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -194,7 +194,7 @@ const AddRoleModal = ({ onAddRole }) => {
                   <div className="flex justify-end mt-6">
                     <button
                       type="submit"
-                      className="px-3 py-2 text-sm tracking-wide text-white capitalize bg-indigo-500 rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-50"
+                      className="px-3 py-2 text-sm tracking-wide text-white capitalize bg-[#001F3F] rounded-md hover:bg-indigo-600 focus:outline-none focus:ring focus:ring-indigo-300 focus:ring-opacity-50"
                     >
                       Add Role
                     </button>

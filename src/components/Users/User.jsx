@@ -183,10 +183,10 @@ const User = () => {
     <div className="p-4 sm:p-6 md:p-8">
       <Navbar />
       <ToastContainer />
-      <div className="bg-white rounded-lg shadow-md mt-6 p-6 sm:p-8">
+      <div className="bg-[#e7e7f0] rounded-lg shadow-md mt-6 p-6 sm:p-8">
         <div className="container mx-auto">
           <h1 className="text-2xl sm:text-3xl font-bold mb-4">User Table</h1>
-          <div className="mb-4 flex flex-col sm:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
+          <div className="mb-4 flex flex-col sm:flex-row xl:flex-row lg:flex-row md:flex-row sm:justify-between sm:items-center space-y-4 sm:space-y-0">
             <div className="flex flex-col sm:flex-row sm:space-x-4 w-full sm:w-auto items-start sm:items-center">
               <div className="relative w-full sm:w-56">
                 <input
@@ -237,7 +237,7 @@ const User = () => {
               </select>
             </div>
 
-            <div className="flex justify-center items-center gap-3">
+            <div className="flex justify-center pt-2 md:pt-0 sm:pt-0 items-center gap-3">
               <AddUserModal onAddUser={handleAddUser} />
               <button
                 className="flex items-center gap-2 bg-red-600 text-white px-2 py-1 rounded-lg hover:bg-red-700 transition-colors duration-300"
@@ -252,7 +252,7 @@ const User = () => {
           <div className="overflow-x-auto shadow rounded-lg border border-gray-200">
             <table className="table-auto w-full text-left text-sm text-gray-900">
               <thead className="bg-gray-100 text-xs uppercase">
-                <tr>
+                <tr className="">
                   <th className="px-6 py-3">
                     <input
                       type="checkbox"
@@ -273,11 +273,11 @@ const User = () => {
                   ))}
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="">
                 {paginatedUsers.map((user, index) => (
                   <tr
                     key={`${user.userId}-${user.name}`}
-                    className="hover:bg-gray-50"
+                    className="hover:bg-gray-50 border-b border-gray-300"
                   >
                     <td className="px-6 py-4">
                       <input
@@ -294,7 +294,8 @@ const User = () => {
                     <td className="px-6 py-4">
                       <img
                         src={
-                          user.image || "https://example.com/default-avatar.jpg"
+                          user.image ||
+                          "https://image.pngaaa.com/730/4806730-middle.png"
                         }
                         alt={`${user.name}'s avatar`}
                         className="w-10 h-10 rounded-full object-cover"
@@ -320,7 +321,7 @@ const User = () => {
                     </td>
                     <td className="px-6 py-4 flex items-center gap-5">
                       <button
-                        className="text-blue-600 hover:text-blue-800 transition-colors duration-300"
+                        className="text-[#001F3F] hover:text-blue-800 transition-colors duration-300"
                         onClick={() => handleEdit(user.userId)}
                       >
                         <FaEdit size={23} />
@@ -362,7 +363,7 @@ const User = () => {
                   key={i}
                   className={`px-3 py-1 rounded-lg ${
                     i + 1 === currentPage
-                      ? "bg-blue-600 text-white"
+                      ? "bg-[#001F3F] text-white"
                       : "bg-gray-200 text-gray-700"
                   } hover:bg-blue-700 hover:text-white transition-colors duration-300`}
                   onClick={() => handlePageChange(i + 1)}
